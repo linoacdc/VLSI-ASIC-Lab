@@ -1,0 +1,36 @@
+#Script
+
+
+set_db / .dft_scan_style muxed_scan
+
+set_db / .dft_prefix DFT_
+
+set_db / .dft_identify_top_level_test_clocks true
+
+set_db / .dft_identify_test_signals true
+
+set_db / .dft_identify_internal_test_clocks false
+
+set_db / .use_scan_seqs_for_non_dft false
+
+set_db design:AES_ENC .dft_scan_map_mode tdrc_pass
+
+set_db design:AES_ENC .dft_connect_shift_enable_during_mapping tie_off
+
+set_db design:AES_ENC .dft_connect_scan_data_pins_during_mapping loopback
+
+set_db design:AES_ENC .dft_scan_output_preference auto
+
+set_db design:AES_ENC .dft_lockup_element_type preferred_level_sensitive
+
+set_db design:AES_ENC .dft_mix_clock_edges_in_scan_chains true
+
+define_test_clock -name scanclk -period 20000 CLK 
+
+define_shift_enable -name se -active high -create_port se
+
+define_test_mode -name test_mode -active high -create_port test_mode
+
+define_scan_chain -name top_chain -sdi scan_in -sdo scan_out -shift_enable se -create_ports
+
+
